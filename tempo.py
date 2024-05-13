@@ -4,7 +4,7 @@
 
 import time
 
-import math
+from math import sqrt
 
 
 #vamos calcular a raiz quadrada de 1000 números  utilizando dois métodos.
@@ -22,7 +22,7 @@ power_2=time.perf_counter()
 sqrt_1=time.perf_counter()
 
 for i in range(1000):
-    y=math.sqrt(i)
+    y=sqrt(i)
 
 sqrt_2=time.perf_counter()
 

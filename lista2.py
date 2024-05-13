@@ -52,6 +52,22 @@ nums = [ 7 , 3 , 4 , 2 , 11 , 15 ]
 target=8
 
 
+def dictwo_sum(nums,target):
+    d={}
+
+    for i,num in enumerate(nums):
+        m=target-num
+        if m in d:
+            return [d[m],i]
+        else:
+            d[num]=i
+
+
+print(dictwo_sum([7,1,2,3,2,4],9))
+
+
+
+
 
 
 
@@ -119,5 +135,9 @@ def Tminus_one(lista, n):
 
 
 print(Tminus_one([1,1,2,-1],1))
+
+
+
+
 
 
