@@ -1,0 +1,2 @@
+[<__main__.Point2D object at 0x000002065D580A10>, <__main__.Point2D object at 0x000002065D580A50>, <__main__.Point2D object at 0x000002065D580A90>],red,tri[<__main__.Point2D object at 0x0000026A69680A10>, <__main__.Point2D object at 0x0000026A69680A50>, <__main__.Point2D object at 0x0000026A69680A90>],red,tri
+[<__main__.Point2D object at 0x0000017A4A880A10>, <__main__.Point2D object at 0x0000017A4A880A50>, <__main__.Point2D object at 0x0000017A4A880A90>],red,tri
