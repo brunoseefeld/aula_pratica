@@ -53,13 +53,13 @@ class Polygons():
                 
                 line+=f'{pts}'
 
-                line+=','
+                line+='#'
                     
                 #getting the color
 
                 line+=poly[0].color
 
-                line+=','
+                line+='#'
 
                 #getting the name
 
@@ -82,7 +82,7 @@ class Polygons():
         poly_info=file.readlines() #addressing each line from the file, that has infor about 1 polygon
 
         for info in poly_info:
-            info=info.split(",") #since they were csv, now we get a list with the info
+            info=info.split("#") #since they were csv, now we get a list with the info
             poly_points=info[0] #list of tuples that are coordinates of points. 
 
             # this is string repr of a list, we want the actual list.
@@ -130,11 +130,13 @@ catetos.add_polygon(triangulo,'tri')
 catetos.add_polygon(segmento,'segmento')
 catetos.add_polygon(ponto,'pont0')
 
-catetos.save_to_file('poly_info2.txt')
+catetos.save_to_file('poly_info3.txt')
 
 
 novo=Polygons()
 
 
-novo.load_from_file('poly_info2.txt')
+novo.load_from_file('poly_info3.txt')
+
+
 
