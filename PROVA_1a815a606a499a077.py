@@ -120,6 +120,12 @@ class Campo:
                 f_1=float(info[2])
                 forcas.append(Forca(f_0,f_1))
 
+        for corpo in self.blocos:
+            for f in forcas:
+                corpo.aplica_forca(f)
+
+            
+
         
 
         
