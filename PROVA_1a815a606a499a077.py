@@ -73,41 +73,59 @@ class Forca:
 
 
 class Campo:
-    def __init__(self, blocos:[Bloco]) -> None:
-        self.blocos=blocos
+    def __init__(self, corpos:[Bloco]) -> None:
+        self.blocos=corpos
 
     def __str__(self) -> str:
         string_blocos=[]
-        for bloco in self.blocos:
-            string_blocos.append(f'{bloco}')
+        for corpo in self.blocos:
+            string_blocos.append(f'{corpo}')
         return ' ; '.join(string_blocos)
     
 
     def caminhada(self,forcas):
         
 
-        for bloco in self.blocos:
+        for corpo in self.blocos:
             for f in forcas:
-                bloco.aplica_forca(f)
+                corpo.aplica_forca(f)
 
         return self
     
 
-    def carregue(filename:str):
+    def carregue(self,filename:str):
+
+        self.blocos=[]
+
+        
+        forcas=[]
         file=open(filename,'r')
 
         content=file.readlines()
 
-        blocos=[]
-        forcas=[]
+        
 
-        for line in content:
-            line.split()
-            for i in line:
-                print(i)
+        for line in content[0:-1]: #a última linha é vazia
+            info=line.split()
+            if info[0]=='Corpo:':   
+                b_0=float(info[1])
+                b_1=float(info[2])
+                b_m=float(info[3])
 
+                self.blocos.append(Bloco(b_0,b_1,b_m))
 
+            else:
+                
+                f_0=float(info[1])
+                f_1=float(info[2])
+                forcas.append(Forca(f_0,f_1))
+
+        
+
+        
         file.close()
+
+        
 
 
 
@@ -139,9 +157,13 @@ bloco2=Bloco(10,24.121212,30)
 
 forcinha=bloco2.menos(bloco1)
 
-print(forcinha)
 
-print(bloco1-bloco2)
+
+campo=Campo([])
+
+campo.carregue('info.txt')
+
+print(campo)
 
 
 
