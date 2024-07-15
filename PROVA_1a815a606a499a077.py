@@ -1,9 +1,13 @@
+
+#Questão 1 
 def my_code():
     return '1a815a606a499a077'
 
 
 def my_name():
     return 'Bruno Eickhoff Seefeld'
+
+#Questão 2
 
 import math
 class Bloco:
@@ -17,9 +21,11 @@ class Bloco:
     def __str__(self) -> str:
         bloco=(self.b_0,self.b_1,self.b_m)
 
-        return f'{bloco}'
+        y=([ float("%.2f" % i) for i in bloco])
+
+        return f'{y}'
     
-    def aplica_forca(self, F):
+    def aplica_forca(self, F): #método da questão 4
         self.b_0=self.b_0+F.f_0*(1 -math.cos(self.b_m)*math.exp(-self.b_m))
         self.b_1=self.b_1+F.f_1*(1 -math.cos(self.b_m)*math.exp(-self.b_m))
 
@@ -28,9 +34,9 @@ class Bloco:
         self.aplica_forca(F)
         return self
     
-    def menos(self, outro):
-        f_0=(self.b_0-outro.b_0)*(1-math.cos((self.b_m+outro.b_m)/2))*math.exp(-(self.b_m+outro.b_m)/2)
-        f_1=(self.b_1-outro.b_1)*(1-math.cos((self.b_m+outro.b_m)/2))*math.exp(-(self.b_m+outro.b_m)/2)
+    def menos(self, outro):   #questão 5
+        f_0=(self.b_0-outro.b_0)*(1-math.cos((self.b_m+outro.b_m)*0.5)*math.exp(-(self.b_m+outro.b_m)*0.5))
+        f_1=(self.b_1-outro.b_1)*(1-math.cos((self.b_m+outro.b_m)*0.5)*math.exp(-(self.b_m+outro.b_m)*0.5))
         resultante=Forca(f_0,f_1)
 
         return resultante
@@ -51,11 +57,13 @@ class Forca:
 
 
     def __str__(self) -> str:
-        return f'{[self.f_0,self.f_1]}'
+        coord=[self.f_0,self.f_1]
+        y=[float("%.2f " % i) for i in coord]
+        return f'{y}'
     
     def __add__(self,outra):
-        r0=self.f_0+outra.f_0
-        r1=self.f_1+outra.f_1
+        r0=self.f_0+ outra.f_0
+        r1=self.f_1+ outra.f_1
 
         return Forca(r0,r1)
 
@@ -66,15 +74,25 @@ class Forca:
         r1=self.f_1*alpha
         
         return Forca(r0,r1)
+    
+    def __sub__(self,outra):
+        r0=self.f_0- outra.f_0
+        r1=self.f_1- outra.f_1
+
+        return Forca(r0,r1)
+
+        
 
 
 
 
 
 
+# Questão 3 
 class Campo:
     def __init__(self, corpos:[Bloco]) -> None:
         self.blocos=corpos
+        
 
     def __str__(self) -> str:
         string_blocos=[]
@@ -82,7 +100,7 @@ class Campo:
             string_blocos.append(f'{corpo}')
         return ' ; '.join(string_blocos)
     
-
+    #questão 7
     def caminhada(self,forcas):
         
 
@@ -92,7 +110,7 @@ class Campo:
 
         return self
     
-
+    # questão 8
     def carregue(self,filename:str):
 
         self.blocos=[]
@@ -105,7 +123,7 @@ class Campo:
 
         
 
-        for line in content[0:-1]: #a última linha é vazia
+        for line in content: #a última linha é vazia
             info=line.split()
             if info[0]=='Corpo:':   
                 b_0=float(info[1])
@@ -120,9 +138,7 @@ class Campo:
                 f_1=float(info[2])
                 forcas.append(Forca(f_0,f_1))
 
-        for corpo in self.blocos:
-            for f in forcas:
-                corpo.aplica_forca(f)
+        self.caminhada(forcas)
 
             
 
@@ -139,37 +155,33 @@ class Campo:
     
 
 
+#Questão 6
+def colisao(tuple1,tuple2): 
+    brm=math.log( 1+tuple1[1].b_m+tuple2[1].b_m )
 
-def colisao(tuple1,tuple2):
-    brm=math.log(1+tuple1[1].b_m+tuple2[1].b_m)
+    br0=(( tuple1[1].b_0-tuple2[1].b_0) * 
+         (1-math.sin( math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )*math.exp( -math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )))
 
-    br0=(tuple1[1].b_0-tuple2[1].b_0)*(1-math.sin(math.sqrt(tuple1[1].b_m*tuple2.b_m)))*math.exp(-math.sqrt(tuple1[1].b_m*tuple2[1].b_m))
-
-    br1=(tuple1[1].b_1-tuple2[1].b_1)*(1-math.sin(math.sqrt(tuple1[1].b_m*tuple2.b_m)))*math.exp(-math.sqrt(tuple1[1].b_m*tuple2[1].b_m))
+    br1=(( tuple1[1].b_1-tuple2[1].b_1) *
+         (1-math.sin( math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )*math.exp( -math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )))
 
     br=Bloco(br0,br1,brm)
 
-    fr=(((tuple1[0]+(-1*tuple2[0]).norma)+(tuple1[0]+tuple2[0]).norma)/2)*(tuple1[0]+tuple2[0])
+    fr=(((tuple1[0]-tuple2[0]).norma)+(tuple1[0]+tuple2[0]).norma) * .5 *  (tuple1[0]+tuple2[0])
 
     br.aplica_forca(fr)
 
     return br
 
 
-    
-bloco1=Bloco(10.33933,-34.0,10.3456)
 
-bloco2=Bloco(10,24.121212,30)
+b=Bloco(0,0,1)
+f=Forca(0,5.847978678)
 
-forcinha=bloco2.menos(bloco1)
+b.aplica_forca(f)
 
+print(b)
 
-
-campo=Campo([])
-
-campo.carregue('info.txt')
-
-print(campo)
 
 
 
