@@ -19,11 +19,7 @@ class Bloco:
 
 
     def __str__(self) -> str:
-        bloco=(self.b_0,self.b_1,self.b_m)
-
-        y=([ float("%.2f" % i) for i in bloco])
-
-        return f'{y}'
+        return f'({self.b_0:.2f}, {self.b_1:.2f}, {self.b_m:.2f})'
     
     def aplica_forca(self, F): #método da questão 4
         self.b_0=self.b_0+F.f_0*(1 -math.cos(self.b_m)*math.exp(-self.b_m))
@@ -156,18 +152,18 @@ class Campo:
 
 
 #Questão 6
-def colisao(tuple1,tuple2): 
-    brm=math.log( 1+tuple1[1].b_m+tuple2[1].b_m )
+def colisao(tuple1:(Forca,Bloco),tuple2:(Forca,Bloco)): 
+    brm = math.log( 1+tuple1[1].b_m+tuple2[1].b_m )
 
-    br0=(( tuple1[1].b_0-tuple2[1].b_0) * 
+    br0 = (( tuple1[1].b_0-tuple2[1].b_0) * 
          (1-math.sin( math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )*math.exp( -math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )))
 
-    br1=(( tuple1[1].b_1-tuple2[1].b_1) *
+    br1 = (( tuple1[1].b_1-tuple2[1].b_1) *
          (1-math.sin( math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )*math.exp( -math.sqrt(tuple1[1].b_m*tuple2[1].b_m) )))
 
-    br=Bloco(br0,br1,brm)
+    br = Bloco(br0,br1,brm)
 
-    fr=(((tuple1[0]-tuple2[0]).norma)+(tuple1[0]+tuple2[0]).norma) * .5 *  (tuple1[0]+tuple2[0])
+    fr = (((tuple1[0]-tuple2[0]).norma)+(tuple1[0]+tuple2[0]).norma) * .5 *  (tuple1[0]+tuple2[0])
 
     br.aplica_forca(fr)
 
@@ -175,12 +171,28 @@ def colisao(tuple1,tuple2):
 
 
 
-b=Bloco(0,0,1)
-f=Forca(0,5.847978678)
+f1=Forca(5,10)
+f2=Forca(-1,-2)
 
-b.aplica_forca(f)
+b1=Bloco(10.3393,-34,10.3456)
+b2=Bloco(10,24.121212,30)
+b3=Bloco(10,-39,24)
+b4=Bloco(20,-24,86)
+#b1.aplica_forca(f)
+campo=Campo([b1,b2,b3,b4])
 
-print(b)
+campo.caminhada([f1,f2])
+print(campo)
+
+
+
+
+
+
+
+
+
+
 
 
 
